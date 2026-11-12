@@ -12,6 +12,16 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("MERN Backend Server is running!");
 });
+// Health check route
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Server is healthy",
+    database: mongoose.connection.readyState === 1
+      ? "Connected"
+      : "Disconnected",
+  });
+});
 
 // Start server
 app.listen(PORT, () => {
